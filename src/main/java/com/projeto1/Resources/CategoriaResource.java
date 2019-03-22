@@ -1,16 +1,30 @@
 package com.projeto1.Resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.projeto1.domain.Categoria;
 
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
 
 	@RequestMapping(method=RequestMethod.GET)
-	public String listar() {
-		return "Método funcionando";
+	public List<Categoria> listar() {
+		Categoria cat1 = new Categoria(1, "Informática");
+		Categoria cat2 = new Categoria(1, "Informática");
+		
+		List<Categoria> lista = new ArrayList<>();
+		lista.add(cat1);
+		lista.add(cat2);
+		
+		return lista;
+		
+		
 	}
 	
 	
