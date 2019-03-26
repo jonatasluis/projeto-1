@@ -8,8 +8,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.projeto1.domain.Categoria;
+import com.projeto1.domain.Cidade;
+import com.projeto1.domain.Estado;
 import com.projeto1.domain.Produto;
 import com.projeto1.repositories.CategoriaRepository;
+import com.projeto1.repositories.CidadeRepository;
+import com.projeto1.repositories.EstadoRepository;
 import com.projeto1.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -19,6 +23,11 @@ public class Projeto1Application  implements CommandLineRunner {
 	CategoriaRepository categoriaRepository;
 	@Autowired
 	ProdutoRepository produtoRepository;
+	@Autowired
+	EstadoRepository estadoRepository;
+	@Autowired
+	CidadeRepository cidadeRepository;
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(Projeto1Application.class, args);
@@ -42,11 +51,24 @@ public class Projeto1Application  implements CommandLineRunner {
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 		
 		
+		Estado est1 = new Estado(null,"Minas Gerais");
+		Estado est2 = new Estado(null,"São Paulo");
 		
+		Cidade cit1 = new Cidade(null, "Belo Horizonte", est1);
+		Cidade cit2 = new Cidade(null, "São Paulo" , est2);
+		Cidade cit3 = new Cidade(null, "Campinas", est2);
+		
+		est1.getCidades().addAll(Arrays.asList(cit1));
+		est2.getCidades().addAll(Arrays.asList(cit2,cit3));
 		
 		
 		categoriaRepository.saveAll(Arrays.asList(cat1,cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
+		estadoRepository.saveAll(Arrays.asList(est1, est2));
+		cidadeRepository.saveAll(Arrays.asList(cit1, cit2, cit3));
+		
+		
+		
 		
 	}
 
