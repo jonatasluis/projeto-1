@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.projeto1.domain.Categoria;
 import com.projeto1.domain.Cidade;
+import com.projeto1.domain.Cliente;
+import com.projeto1.domain.Endereco;
 import com.projeto1.domain.Estado;
 import com.projeto1.domain.Produto;
+import com.projeto1.domain.enums.TipoCliente;
 import com.projeto1.repositories.CategoriaRepository;
 import com.projeto1.repositories.CidadeRepository;
+import com.projeto1.repositories.ClienteRepository;
+import com.projeto1.repositories.EnderecoRepository;
 import com.projeto1.repositories.EstadoRepository;
 import com.projeto1.repositories.ProdutoRepository;
 
@@ -27,7 +32,10 @@ public class Projeto1Application  implements CommandLineRunner {
 	EstadoRepository estadoRepository;
 	@Autowired
 	CidadeRepository cidadeRepository;
-	
+	@Autowired
+	ClienteRepository clienteRepository;
+	@Autowired
+	EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(Projeto1Application.class, args);
@@ -62,10 +70,25 @@ public class Projeto1Application  implements CommandLineRunner {
 		est2.getCidades().addAll(Arrays.asList(cit2,cit3));
 		
 		
+		Cliente cliente1 = new Cliente(null, "Jônatas Luis", "jonatas.luis@gmail.com", "00716854058", TipoCliente.PESSOAFISICA);
+		
+		cliente1.getTelefones().addAll(Arrays.asList("54991470811","5434515657"));
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "", "J Pessoa", "95700-000", cliente1, cit1);
+		Endereco e2 = new Endereco(null, "Rua das Neves", "100", "", "Jardim C", "95700-350", cliente1, cit2);
+		
+		cliente1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		
+		
+		
 		categoriaRepository.saveAll(Arrays.asList(cat1,cat2));
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(cit1, cit2, cit3));
+		clienteRepository.saveAll(Arrays.asList(cliente1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+		
 		
 		
 		
