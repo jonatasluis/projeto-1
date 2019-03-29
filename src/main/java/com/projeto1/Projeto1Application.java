@@ -1,5 +1,6 @@
 package com.projeto1;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +13,19 @@ import com.projeto1.domain.Cidade;
 import com.projeto1.domain.Cliente;
 import com.projeto1.domain.Endereco;
 import com.projeto1.domain.Estado;
+import com.projeto1.domain.PagamentoComBoleto;
+import com.projeto1.domain.PagamentoComCartao;
+import com.projeto1.domain.Pedido;
 import com.projeto1.domain.Produto;
+import com.projeto1.domain.enums.EstadoPagamento;
 import com.projeto1.domain.enums.TipoCliente;
 import com.projeto1.repositories.CategoriaRepository;
 import com.projeto1.repositories.CidadeRepository;
 import com.projeto1.repositories.ClienteRepository;
 import com.projeto1.repositories.EnderecoRepository;
 import com.projeto1.repositories.EstadoRepository;
+import com.projeto1.repositories.PagamentoRepository;
+import com.projeto1.repositories.PedidoRepository;
 import com.projeto1.repositories.ProdutoRepository;
 
 @SpringBootApplication
@@ -36,6 +43,11 @@ public class Projeto1Application  implements CommandLineRunner {
 	ClienteRepository clienteRepository;
 	@Autowired
 	EnderecoRepository enderecoRepository;
+	@Autowired
+	PedidoRepository pedidoRepository;
+	@Autowired
+	PagamentoRepository pagamentoRepository;
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(Projeto1Application.class, args);
@@ -79,6 +91,20 @@ public class Projeto1Application  implements CommandLineRunner {
 		
 		cliente1.getEnderecos().addAll(Arrays.asList(e1,e2));
 		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		
+		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cliente1, e1);
+		Pedido ped2 = new Pedido(null, sdf.parse("10/10/2019 19:35"), cliente1, e2);
+		
+		PagamentoComCartao pagto1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO, ped1, 6);
+		ped1.setPagamento(pagto1);
+		
+		PagamentoComBoleto pagto2 = new PagamentoComBoleto(null, EstadoPagamento.PENDENTE, ped2, sdf.parse("20/10/2019 00:00"), null);		
+		ped2.setPagamento(pagto2);
+		
+		
+		cliente1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+		
 		
 		
 		
@@ -88,6 +114,8 @@ public class Projeto1Application  implements CommandLineRunner {
 		cidadeRepository.saveAll(Arrays.asList(cit1, cit2, cit3));
 		clienteRepository.saveAll(Arrays.asList(cliente1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pagto1,pagto2));
 		
 		
 		
