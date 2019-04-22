@@ -13,7 +13,6 @@ import com.projeto1.domain.enums.EstadoPagamento;
 import com.projeto1.repositories.ItemPedidoRepository;
 import com.projeto1.repositories.PagamentoRepository;
 import com.projeto1.repositories.PedidoRepository;
-import com.projeto1.repositories.ProdutoRepository;
 import com.projeto1.services.exceptios.ObjectNotFoundException;
 
 @Service
